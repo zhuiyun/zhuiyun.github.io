@@ -71,22 +71,22 @@
         </li>
       
         <li>
-          <a class="nav home" href="/archives/"
+          <a class="nav home" href="/tags/"
             
             
-            id="archives">
-            <i class='fas fa-code-branch fa-fw'></i>&nbsp;归档
+            id="tags">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;标签
           </a>
         </li>
       
         <li>
-          <a class="nav home" href="/friends/"
+          <a class="nav home" href="/categories/"
             
               rel="nofollow"
             
             
-            id="friends">
-            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+            id="categories">
+            <i class='fas fa-link fa-fw'></i>&nbsp;分类
           </a>
         </li>
       
@@ -172,7 +172,7 @@
 			
 				<div class="m_search">
 					<form name="searchform" class="form u-search-form">
-						<input type="text" class="input u-search-input" placeholder="搜尋" />
+						<input type="text" class="input u-search-input" placeholder="搜索" />
 						<i class="icon fas fa-search fa-fw"></i>
 					</form>
 				</div>
@@ -660,7 +660,7 @@
     </div>
   
   <br>
-  <div><p>博客內容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW">姓名標示-非商業性-相同方式分享 4.0 國際 (CC BY-NC-SA 4.0) 協議</a></p>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
 </div>
   <div>
     本站使用
@@ -778,15 +778,15 @@
 <!-- 复制 -->
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 <script>
-  let COPY_SUCCESS = "複製成功";
-  let COPY_FAILURE = "複製失敗";
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
   /*页面载入完成后，创建复制按钮*/
   !function (e, t, a) {
     /* code */
     var initCopyCode = function(){
       var copyHtml = '';
       copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '  <i class="fa fa-copy"></i><span>複製</span>';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
       copyHtml += '</button>';
       $(".highlight .code pre").before(copyHtml);
       var clipboard = new ClipboardJS('.btn-copy', {
