@@ -172,7 +172,7 @@
 			
 				<div class="m_search">
 					<form name="searchform" class="form u-search-form">
-						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<input type="text" class="input u-search-input" placeholder="Search" />
 						<i class="icon fas fa-search fa-fw"></i>
 					</form>
 				</div>
@@ -325,7 +325,7 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
         <div class="readmore">
           <a href="/2019/07/19/AsyncTask/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            阅读全文
+            Read More
           </a>
         </div>
       
@@ -432,7 +432,7 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
         <div class="readmore">
           <a href="/2019/07/19/关于面试(一)/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            阅读全文
+            Read More
           </a>
         </div>
       
@@ -533,12 +533,12 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="View相关篇"><a href="#View相关篇" class="headerlink" title="View相关篇"></a>View相关篇</h2><h3 id="view的绘制流程"><a href="#view的绘制流程" class="headerlink" title="view的绘制流程"></a>view的绘制流程</h3><p>Android的UI管理系统层级关系<br><img src="https://upload-images.jianshu.io/upload_images/6433218-b03633d639a274f2.png?imageMogr2/auto-orient/" alt><br>    View的绘制过程是从ViewRoot的performTraversals方法开始的，在其内部依次调用View的performMeasure,performLayout,performDraw三个方法。这三个方法分别完成顶级View的measure,layout,draw过程。其中，performMeasure中会调用measure方法，而在measure方法中又会调用onMeausre()方法，然后在onMeaure方法中会对所有的子元素进行measure过程，这时measure流程就从父容器传递到了子元素中，子元素会继续重复父容器的measure过程，如此反复即完成了整个View树结构的遍历，最终 完成View的测量过程。</p>
+      <h4 id="view的绘制流程"><a href="#view的绘制流程" class="headerlink" title="view的绘制流程"></a>view的绘制流程</h4><p>Android的UI管理系统层级关系<br><img src="https://coolyun1.oss-cn-shenzhen.aliyuncs.com/20190719141337.png" alt><br>    View的绘制过程是从ViewRoot的performTraversals方法开始的，在其内部依次调用View的performMeasure,performLayout,performDraw三个方法。这三个方法分别完成顶级View的measure,layout,draw过程。其中，performMeasure中会调用measure方法，而在measure方法中又会调用onMeausre()方法，然后在onMeaure方法中会对所有的子元素进行measure过程，这时measure流程就从父容器传递到了子元素中，子元素会继续重复父容器的measure过程，如此反复即完成了整个View树结构的遍历，最终 完成View的测量过程。</p>
       
         <div class="readmore">
           <a href="/2019/07/19/关于面试(二)/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            阅读全文
+            Read More
           </a>
         </div>
       
@@ -646,7 +646,7 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
   <section class='widget category'>
     
 <header class='pure'>
-  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Categories</div>
   
     <a class="rightBtn"
     
@@ -679,7 +679,7 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
   <section class='widget tagcloud'>
     
 <header class='pure'>
-  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Hot Tags</div>
   
     <a class="rightBtn"
     
@@ -794,19 +794,19 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
     </div>
   
   <br>
-  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+  <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
 </div>
   <div>
-    本站使用
+    Use
     <a href="欢迎来到Coolyun的空间" target="_blank" class="codename">CoolYun</a>
-    作为主题
+    as theme
     
-      ，
-      总访问量为
+      , 
+      total visits
       <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
-      次
+      times
     
-    。
+    . 
   </div>
 </footer>
 <script>setLoadingBarProgress(80);</script>
@@ -912,15 +912,15 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
 <!-- 复制 -->
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 <script>
-  let COPY_SUCCESS = "复制成功";
-  let COPY_FAILURE = "复制失败";
+  let COPY_SUCCESS = "Copied";
+  let COPY_FAILURE = "Copy failed";
   /*页面载入完成后，创建复制按钮*/
   !function (e, t, a) {
     /* code */
     var initCopyCode = function(){
       var copyHtml = '';
       copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
       copyHtml += '</button>';
       $(".highlight .code pre").before(copyHtml);
       var clipboard = new ClipboardJS('.btn-copy', {
