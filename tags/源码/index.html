@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>Archives: 2019/7 | CoolYun</title>
+  <title>Tag: 源码 | CoolYun</title>
   
   
 
@@ -212,18 +212,14 @@
 
   <div class="l_body">
     <div class='body-wrapper'>
-      <div class='l_main'>
-	
-		
+      
+<div class='l_main'>
+  
+    
+      
   <section class="post-list">
     
       
-        
-          
-        
-          
-        
-          
         
           
         
@@ -345,312 +341,6 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <article class="post reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/2019/07/19/关于面试(一)/">
-      关于面试(一)
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-  <div class='new-meta-item author'>
-    <a href="http://yoursite.com" rel="nofollow">
-      
-        <i class="fas fa-user" aria-hidden="true"></i>
-      
-      <p>CoolYun</p>
-    </a>
-  </div>
-
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2019-07-19</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-  
-  <div class='new-meta-item category'>
-    <a href='/categories/Android/' rel="nofollow">
-      <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>Android</p>
-    </a>
-  </div>
-
-
-          
-        
-          
-            
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <h2 id="优化篇"><a href="#优化篇" class="headerlink" title="优化篇"></a>优化篇</h2><h3 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h3><ol>
-<li>内部类隐性的持有外部类的引用导致内存泄漏:常见的如使用handler时,直接new创建对象,当页面关闭时,如果handler还在运行时会持有activity的引用,导致activity得不到释放,从而引起内存泄漏。<br> 解决方法:使用静态内部类,然后用弱引用持有外部类的引用
-      
-        <div class="readmore">
-          <a href="/2019/07/19/关于面试(一)/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-    
-      <div class="full-width auto-padding tags">
-        
-          <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
-        
-          <a href="/tags/面试/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>面试</a>
-        
-      </div>
-    
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/2019/07/19/关于面试(二)/">
-      关于面试(二)
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-  <div class='new-meta-item author'>
-    <a href="http://yoursite.com" rel="nofollow">
-      
-        <i class="fas fa-user" aria-hidden="true"></i>
-      
-      <p>CoolYun</p>
-    </a>
-  </div>
-
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2019-07-19</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-  
-  <div class='new-meta-item category'>
-    <a href='/categories/Android/' rel="nofollow">
-      <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>Android</p>
-    </a>
-  </div>
-
-
-          
-        
-          
-            
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <h2 id="View相关篇"><a href="#View相关篇" class="headerlink" title="View相关篇"></a>View相关篇</h2><h3 id="view的绘制流程"><a href="#view的绘制流程" class="headerlink" title="view的绘制流程"></a>view的绘制流程</h3><p>Android的UI管理系统层级关系<br><img src="https://upload-images.jianshu.io/upload_images/6433218-b03633d639a274f2.png?imageMogr2/auto-orient/" alt><br>    View的绘制过程是从ViewRoot的performTraversals方法开始的，在其内部依次调用View的performMeasure,performLayout,performDraw三个方法。这三个方法分别完成顶级View的measure,layout,draw过程。其中，performMeasure中会调用measure方法，而在measure方法中又会调用onMeausre()方法，然后在onMeaure方法中会对所有的子元素进行measure过程，这时measure流程就从父容器传递到了子元素中，子元素会继续重复父容器的measure过程，如此反复即完成了整个View树结构的遍历，最终 完成View的测量过程。</p>
-      
-        <div class="readmore">
-          <a href="/2019/07/19/关于面试(二)/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-    
-      <div class="full-width auto-padding tags">
-        
-          <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
-        
-          <a href="/tags/面试/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>面试</a>
-        
-      </div>
-    
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/2019/07/11/hello-world/">
-      Hello World
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-  <div class='new-meta-item author'>
-    <a href="http://yoursite.com" rel="nofollow">
-      
-        <i class="fas fa-user" aria-hidden="true"></i>
-      
-      <p>CoolYun</p>
-    </a>
-  </div>
-
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2019-07-11</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-          
-            
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-      
-        <div class="readmore">
-          <a href="/2019/07/11/hello-world/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-    
-  </section>
-</article>
-
-          </div>
-        
-      
     
   </section>
   
@@ -662,7 +352,8 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
   
 
 
-	
+    
+  
 </div>
 <aside class='l_side'>
   
@@ -902,14 +593,6 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
   </div>
 </footer>
 <script>setLoadingBarProgress(80);</script>
-
-
-
-
-	<!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
-	
-
-	
 
 
       <script>setLoadingBarProgress(60);</script>

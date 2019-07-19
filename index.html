@@ -201,70 +201,6 @@
 		<nav class="menu navgation">
       <ul>
         
-          
-            <li>
-							<a class="nav flat-box" href="/"
-                
-                
-                id="home">
-								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章#
-							</a>
-            </li>
-          
-            <li>
-							<a class="nav flat-box" href="/blog/archives/"
-                
-                  rel="nofollow"
-                
-                
-                id="blogarchives">
-								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
-							</a>
-            </li>
-          
-            <li>
-							<a class="nav flat-box" href="/projects/"
-                
-                
-                id="projects">
-								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
-							</a>
-            </li>
-          
-            <li>
-							<a class="nav flat-box" href="/friends/"
-                
-                  rel="nofollow"
-                
-                
-                id="friends">
-								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
-							</a>
-            </li>
-          
-            <li>
-							<a class="nav flat-box" href="https://xaoxuu.com/wiki/material-x/"
-                
-                  rel="nofollow"
-                
-                
-                id="https:xaoxuu.comwikimaterial-x">
-								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
-							</a>
-            </li>
-          
-            <li>
-							<a class="nav flat-box" href="/about/"
-                
-                  rel="nofollow"
-                
-                
-                id="about">
-								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
-							</a>
-            </li>
-          
-       
       </ul>
 		</nav>
     </header>
@@ -284,9 +220,342 @@
         
           
         
+          
+        
+          
+        
+          
+        
       
     
     
+      
+        
+          <div class='post-wrapper'>
+            <article class="post reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/2019/07/19/AsyncTask/">
+      AsyncTask源码分析
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="http://yoursite.com" rel="nofollow">
+      
+        <i class="fas fa-user" aria-hidden="true"></i>
+      
+      <p>CoolYun</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-07-19</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Android/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Android</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <p>先看一下用法</p>
+<pre><code>AsyncTask&lt;Void, Void, Void&gt; asyncTask = new AsyncTask&lt;Void, Void, Void&gt;() {
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+        return null;
+    }
+};
+asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己去实现,才能使用</p>
+      
+        <div class="readmore">
+          <a href="/2019/07/19/AsyncTask/" class="flat-box">
+            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+    
+      <div class="full-width auto-padding tags">
+        
+          <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
+        
+          <a href="/tags/源码/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>源码</a>
+        
+      </div>
+    
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/2019/07/19/关于面试(一)/">
+      关于面试(一)
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="http://yoursite.com" rel="nofollow">
+      
+        <i class="fas fa-user" aria-hidden="true"></i>
+      
+      <p>CoolYun</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-07-19</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Android/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Android</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h2 id="优化篇"><a href="#优化篇" class="headerlink" title="优化篇"></a>优化篇</h2><h3 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h3><ol>
+<li>内部类隐性的持有外部类的引用导致内存泄漏:常见的如使用handler时,直接new创建对象,当页面关闭时,如果handler还在运行时会持有activity的引用,导致activity得不到释放,从而引起内存泄漏。<br> 解决方法:使用静态内部类,然后用弱引用持有外部类的引用
+      
+        <div class="readmore">
+          <a href="/2019/07/19/关于面试(一)/" class="flat-box">
+            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+    
+      <div class="full-width auto-padding tags">
+        
+          <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
+        
+          <a href="/tags/面试/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>面试</a>
+        
+      </div>
+    
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/2019/07/19/关于面试(二)/">
+      关于面试(二)
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="http://yoursite.com" rel="nofollow">
+      
+        <i class="fas fa-user" aria-hidden="true"></i>
+      
+      <p>CoolYun</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-07-19</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Android/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Android</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h2 id="View相关篇"><a href="#View相关篇" class="headerlink" title="View相关篇"></a>View相关篇</h2><h3 id="view的绘制流程"><a href="#view的绘制流程" class="headerlink" title="view的绘制流程"></a>view的绘制流程</h3><p>Android的UI管理系统层级关系<br><img src="https://upload-images.jianshu.io/upload_images/6433218-b03633d639a274f2.png?imageMogr2/auto-orient/" alt><br>    View的绘制过程是从ViewRoot的performTraversals方法开始的，在其内部依次调用View的performMeasure,performLayout,performDraw三个方法。这三个方法分别完成顶级View的measure,layout,draw过程。其中，performMeasure中会调用measure方法，而在measure方法中又会调用onMeausre()方法，然后在onMeaure方法中会对所有的子元素进行measure过程，这时measure流程就从父容器传递到了子元素中，子元素会继续重复父容器的measure过程，如此反复即完成了整个View树结构的遍历，最终 完成View的测量过程。</p>
+      
+        <div class="readmore">
+          <a href="/2019/07/19/关于面试(二)/" class="flat-box">
+            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+    
+      <div class="full-width auto-padding tags">
+        
+          <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
+        
+          <a href="/tags/面试/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>面试</a>
+        
+      </div>
+    
+  </section>
+</article>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -463,94 +732,6 @@
         
           
           
-            <section class='widget grid'>
-  
-<header class='pure'>
-  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
-  
-</header>
-
-  <div class='content pure'>
-    <ul class="grid navgation">
-      
-        <li><a class="flat-box" title="/" href="/"
-          
-          
-          id="home">
-          
-            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
-          
-          近期文章
-        </a></li>
-      
-        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
-          
-            rel="nofollow"
-          
-          
-          id="blogarchives">
-          
-            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
-          
-          文章归档
-        </a></li>
-      
-        <li><a class="flat-box" title="/projects/" href="/projects/"
-          
-          
-          id="projects">
-          
-            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
-          
-          开源项目
-        </a></li>
-      
-        <li><a class="flat-box" title="/friends/" href="/friends/"
-          
-            rel="nofollow"
-          
-          
-          id="friends">
-          
-            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
-          
-          我的友链
-        </a></li>
-      
-        <li><a class="flat-box" title="https://xaoxuu.com/wiki/material-x/" href="https://xaoxuu.com/wiki/material-x/"
-          
-            rel="nofollow"
-          
-          
-          id="https:xaoxuu.comwikimaterial-x">
-          
-            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
-          
-          主题文档
-        </a></li>
-      
-        <li><a class="flat-box" title="/about/" href="/about/"
-          
-            rel="nofollow"
-          
-          
-          id="about">
-          
-            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
-          
-          关于小站
-        </a></li>
-      
-    </ul>
-  </div>
-</section>
-
-          
-        
-      
-        
-          
-          
             
   <section class='widget category'>
     
@@ -571,7 +752,7 @@
     <div class='content pure'>
       <ul class="entry">
         
-          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(0)</div></a></li>
+          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(3)</div></a></li>
         
       </ul>
     </div>
@@ -602,7 +783,7 @@
 </header>
 
     <div class='content pure'>
-      
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/源码/" style="font-size: 14px; color: #999">源码</a> <a href="/tags/面试/" style="font-size: 19px; color: #777">面试</a>
     </div>
   </section>
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>Hello World | CoolYun</title>
+  <title>AsyncTask源码分析 | CoolYun</title>
   
   
 
@@ -228,8 +228,8 @@
         
   
     <h1 class="title">
-      <a href="/2019/07/11/hello-world/">
-        Hello World
+      <a href="/2019/07/19/AsyncTask/">
+        AsyncTask源码分析
       </a>
     </h1>
   
@@ -258,7 +258,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2019-07-11</p>
+    <p>2019-07-19</p>
   </a>
 </div>
 
@@ -266,6 +266,14 @@
         
           
             
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Android/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Android</p>
+    </a>
+  </div>
+
 
           
         
@@ -302,21 +310,126 @@
 
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+          <p>先看一下用法</p>
+<pre><code>AsyncTask&lt;Void, Void, Void&gt; asyncTask = new AsyncTask&lt;Void, Void, Void&gt;() {
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+    @Override
+    protected Void doInBackground(Void... voids) {
+        return null;
+    }
+};
+asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己去实现,才能使用</p>
 <a id="more"></a>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public abstract class AsyncTask&lt;Params, Progress, Result&gt;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>有三个参数,第一个是你要传什么东西异步使用,一般可能是网址,不需要传可以填void,第二个参数为执行进度,不需要也可以填void,第三个是返回数据,也可以填void.</p>
+<p>用asyncTask.execute()执行AsyncTask,括号中填的跟第一个参数对应. excute()方法调用了这个方法,还是在主线程中</p>
+<pre><code>@MainThread
+public final AsyncTask&lt;Params, Progress, Result&gt; execute(Params... params) {
+    return executeOnExecutor(sDefaultExecutor, params);
+}</code></pre><p>之后调用</p>
+<pre><code>@MainThread
+public final AsyncTask&lt;Params, Progress, Result&gt; executeOnExecutor(Executor exec,
+        Params... params) {
+    if (mStatus != Status.PENDING) {
+        switch (mStatus) {
+            case RUNNING:
+                throw new IllegalStateException(&quot;Cannot execute task:&quot;
+                        + &quot; the task is already running.&quot;);
+            case FINISHED:
+                throw new IllegalStateException(&quot;Cannot execute task:&quot;
+                        + &quot; the task has already been executed &quot;
+                        + &quot;(a task can be executed only once)&quot;);
+        }
+    }
 
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    mStatus = Status.RUNNING;
 
+    onPreExecute();
+
+    mWorker.mParams = params;
+    exec.execute(mFuture);
+
+    return this;
+}</code></pre><p>这个方法中判断了mStatus的状态,里面有两个异常抛出,可以看出一个任务只能执行一次. 而mStatus在初始化时置为了Status.PENDING,所以不会进入if (mStatus != Status.PENDING),会改变mStatus状态:mStatus = Status.RUNNING;</p>
+<p>private volatile Status mStatus = Status.PENDING;<br>接下来调用onPreExecute(),点进去看一下这个方法.</p>
+<pre><code>@MainThread
+protected void onPreExecute() {
+}</code></pre><p>这方法是空实现,注解表示此时仍在主线程中,之后调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exec.execute(mFuture);</span><br><span class="line">void execute(Runnable command);</span><br></pre></td></tr></table></figure>
+
+<p>exec是之前的sDefaultExecutor</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private static volatile Executor sDefaultExecutor = SERIAL_EXECUTOR;</span><br><span class="line"></span><br><span class="line">public static final Executor SERIAL_EXECUTOR = new SerialExecutor();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">private static class SerialExecutor implements Executor &#123;</span><br><span class="line">        final ArrayDeque&lt;Runnable&gt; mTasks = new ArrayDeque&lt;Runnable&gt;();</span><br><span class="line">        Runnable mActive;</span><br></pre></td></tr></table></figure>
+
+<pre><code>    public synchronized void execute(final Runnable r) {
+        mTasks.offer(new Runnable() {
+            public void run() {
+                try {
+                    r.run();
+                } finally {
+                    scheduleNext();
+                }
+            }
+        });
+        if (mActive == null) {
+            scheduleNext();
+        }
+    }
+
+    protected synchronized void scheduleNext() {
+        if ((mActive = mTasks.poll()) != null) {
+            THREAD_POOL_EXECUTOR.execute(mActive);
+        }
+    }
+}</code></pre><p>scheduleNext()在这个方法中,由线程池来执行任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">protected synchronized void scheduleNext() &#123;</span><br><span class="line">            if ((mActive = mTasks.poll()) != null) &#123;</span><br><span class="line">                THREAD_POOL_EXECUTOR.execute(mActive);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">public E poll() &#123;</span><br><span class="line">        return pollFirst();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p> 也就是会调出第一个任务来执行</p>
+<p>execute方法 需要一个Runnable,最终调用Runnable的run方法,也就是mFuture的run方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public void run() &#123;</span><br><span class="line">        if (state != NEW ||</span><br><span class="line">            !U.compareAndSwapObject(this, RUNNER, null, Thread.currentThread()))</span><br><span class="line">            return;</span><br><span class="line">        try &#123;</span><br><span class="line">            Callable&lt;V&gt; c = callable;</span><br><span class="line">            if (c != null &amp;&amp; state == NEW) &#123;</span><br><span class="line">                V result;</span><br><span class="line">                boolean ran;</span><br><span class="line">                try &#123;</span><br><span class="line">                    result = c.call();</span><br><span class="line">                    ran = true;</span><br><span class="line">                &#125; catch (Throwable ex) &#123;</span><br><span class="line">                    result = null;</span><br><span class="line">                    ran = false;</span><br><span class="line">                    setException(ex);</span><br><span class="line">                &#125;</span><br><span class="line">                if (ran)</span><br><span class="line">                    set(result);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            // runner must be non-null until state is settled to</span><br><span class="line">            // prevent concurrent calls to run()</span><br><span class="line">            runner = null;</span><br><span class="line">            // state must be re-read after nulling runner to prevent</span><br><span class="line">            // leaked interrupts</span><br><span class="line">            int s = state;</span><br><span class="line">            if (s &gt;= INTERRUPTING)</span><br><span class="line">                handlePossibleCancellationInterrupt(s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>并调用了c.call()方法,而mFuture初始化时传入了一个callable,也就是调用的这个callable的call方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public FutureTask(Callable&lt;V&gt; callable) &#123;</span><br><span class="line">        if (callable == null)</span><br><span class="line">            throw new NullPointerException();</span><br><span class="line">        this.callable = callable;</span><br><span class="line">        this.state = NEW;       // ensure visibility of callable</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>mFuture在初始化时传进去一个mWorker,也就是一个Callable</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mWorker = new WorkerRunnable&lt;Params, Result&gt;() &#123;</span><br><span class="line">            public Result call() throws Exception &#123;</span><br><span class="line">                mTaskInvoked.set(true);</span><br><span class="line">                Result result = null;</span><br><span class="line">                try &#123;</span><br><span class="line">                    Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);</span><br><span class="line">                    //noinspection unchecked</span><br><span class="line">                    result = doInBackground(mParams);</span><br><span class="line">                    Binder.flushPendingCommands();</span><br><span class="line">                &#125; catch (Throwable tr) &#123;</span><br><span class="line">                    mCancelled.set(true);</span><br><span class="line">                    throw tr;</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    postResult(result);</span><br><span class="line">                &#125;</span><br><span class="line">                return result;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在这里执行了doInBackground(mParams),且是异步执行,在finally中调用了 postResult(result),publishProgress需要手动调用才会执行.</p>
+<p>postResult(result)方法是在异步调用,但方法里的实现使用Handler发送消息到主线程</p>
+<pre><code>private Result postResult(Result result) {
+    @SuppressWarnings(&quot;unchecked&quot;)
+    Message message = getHandler().obtainMessage(MESSAGE_POST_RESULT,
+            new AsyncTaskResult&lt;Result&gt;(this, result));
+    message.sendToTarget();
+    return result;
+}</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private static class InternalHandler extends Handler &#123;</span><br><span class="line">        public InternalHandler(Looper looper) &#123;</span><br><span class="line">            super(looper);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<pre><code>    @SuppressWarnings({&quot;unchecked&quot;, &quot;RawUseOfParameterizedType&quot;})
+    @Override
+    public void handleMessage(Message msg) {
+        AsyncTaskResult&lt;?&gt; result = (AsyncTaskResult&lt;?&gt;) msg.obj;
+        switch (msg.what) {
+            case MESSAGE_POST_RESULT:
+                // There is only one result
+                result.mTask.finish(result.mData[0]);
+                break;
+            case MESSAGE_POST_PROGRESS:
+                result.mTask.onProgressUpdate(result.mData);
+                break;
+        }
+    }
+}</code></pre><p>最终在主线程中回调了publishProgress和onPostExecute(result)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@WorkerThread</span><br><span class="line">    protected final void publishProgress(Progress... values) &#123;</span><br><span class="line">        if (!isCancelled()) &#123;</span><br><span class="line">            getHandler().obtainMessage(MESSAGE_POST_PROGRESS,</span><br><span class="line">                    new AsyncTaskResult&lt;Progress&gt;(this, values)).sendToTarget();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<pre><code>private void finish(Result result) {
+    if (isCancelled()) {
+        onCancelled(result);
+    } else {
+        onPostExecute(result);
+    }
+    mStatus = Status.FINISHED;
+}</code></pre>
         </div>
         
           
@@ -327,7 +440,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-07-19T13:46:55+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-07-19T13:46:31+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
     <p>last updated at Jul 19, 2019</p>
@@ -338,6 +451,9 @@
       
         
           
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>Android</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/源码/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>源码</p></a></div>
+
 
         
       
@@ -349,10 +465,15 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/11/hello-world/&title=Hello World | CoolYun&summary=Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/19/AsyncTask/&title=AsyncTask源码分析 | CoolYun&summary=先看一下用法
+AsyncTask&lt;Void, Void, Void&gt; asyncTask = new AsyncTask&lt;Void, Void, Void&gt;() {
 
-More info: Writing"
+    @Override
+    protected Void doInBackground(Void... voids) {
+        return null;
+    }
+};
+asyncTask.execute();源码中这是一个抽象类,必须自己去实现,才能使用"
           
           >
           
@@ -364,10 +485,15 @@ More info: Writing"
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2019/07/11/hello-world/&title=Hello World | CoolYun&summary=Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2019/07/19/AsyncTask/&title=AsyncTask源码分析 | CoolYun&summary=先看一下用法
+AsyncTask&lt;Void, Void, Void&gt; asyncTask = new AsyncTask&lt;Void, Void, Void&gt;() {
 
-More info: Writing"
+    @Override
+    protected Void doInBackground(Void... voids) {
+        return null;
+    }
+};
+asyncTask.execute();源码中这是一个抽象类,必须自己去实现,才能使用"
           
           >
           
@@ -379,10 +505,15 @@ More info: Writing"
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/11/hello-world/&title=Hello World | CoolYun&summary=Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/19/AsyncTask/&title=AsyncTask源码分析 | CoolYun&summary=先看一下用法
+AsyncTask&lt;Void, Void, Void&gt; asyncTask = new AsyncTask&lt;Void, Void, Void&gt;() {
 
-More info: Writing"
+    @Override
+    protected Void doInBackground(Void... voids) {
+        return null;
+    }
+};
+asyncTask.execute();源码中这是一个抽象类,必须自己去实现,才能使用"
           
           >
           
@@ -406,14 +537,15 @@ More info: Writing"
         
             <div class="prev-next">
                 
-                    <section class="prev">
-                        <span class="art-item-left">
-                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/2019/07/19/关于面试(二)/" rel="prev" title="关于面试(二)">
-                                  
-                                      关于面试(二)
-                                  
+                                <a href="/2019/07/19/关于面试(一)/" rel="prev" title="关于面试(一)">
+                                    
+                                        关于面试(一)
+                                    
                                 </a>
                             </h4>
                             
@@ -424,7 +556,6 @@ More info: Writing"
                             
                         </span>
                     </section>
-                
                 
             </div>
         
@@ -451,7 +582,7 @@ More info: Writing"
 
   <script>
     window.subData = {
-      title: 'Hello World',
+      title: 'AsyncTask源码分析',
       tools: true
     }
   </script>
@@ -521,20 +652,6 @@ More info: Writing"
           
           
             
-  <section class='widget toc-wrapper'>
-    
-<header class='pure'>
-  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;TOC</div>
-  
-    <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
-  
-</header>
-
-    <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
-    </div>
-  </section>
-
 
           
         
