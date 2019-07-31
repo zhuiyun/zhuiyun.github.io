@@ -227,6 +227,8 @@
         
           
         
+          
+        
       
     
     
@@ -244,8 +246,8 @@
       
         
   <h2 class="title">
-    <a href="/2019/07/19/AsyncTask/">
-      AsyncTask源码分析
+    <a href="/2019/07/31/AndroidStudio命令行乱码/">
+      解决AndroidStudio的命令行乱码
     </a>
   </h2>
 
@@ -273,7 +275,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2019-07-19</p>
+    <p>2019-07-31</p>
   </a>
 </div>
 
@@ -312,22 +314,10 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <p>先看一下用法</p>
-<pre><code>AsyncTask&lt;Void, Void, Void&gt; asyncTask = new AsyncTask&lt;Void, Void, Void&gt;() {
+      <p>#解决AndroidStudio命令行乱码</p>
+<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>用的macbook,下载了item2后,根据网上博客配置了一些属性,之后打开Androidstudio时,发现命令行乱码,鼓捣了一阵终于搞定</p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>这个情况主要是修改了命令行的字体,但Androidstudio中有默认字体,两者不是同一个造成的,只需修改其中之一即可,我改的是Androidstudio.修改位置如下图:<br><img src="https://i.loli.net/2019/07/31/5d4168e4e131675700.png" alt><br>需要和item2中字体一致<br><img src="https://i.loli.net/2019/07/31/5d41688ed76d781045.png" alt></p>
 
-    @Override
-    protected Void doInBackground(Void... voids) {
-        return null;
-    }
-};
-asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己去实现,才能使用</p>
-      
-        <div class="readmore">
-          <a href="/2019/07/19/AsyncTask/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
-          </a>
-        </div>
       
     </div>
     
@@ -335,7 +325,7 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
         
           <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
         
-          <a href="/tags/源码/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>源码</a>
+          <a href="/tags/问题解决/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>问题解决</a>
         
       </div>
     
@@ -443,6 +433,120 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
           <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
         
           <a href="/tags/面试/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>面试</a>
+        
+      </div>
+    
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/2019/07/19/AsyncTask/">
+      AsyncTask源码分析
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="http://yoursite.com" rel="nofollow">
+      
+        <i class="fas fa-user" aria-hidden="true"></i>
+      
+      <p>CoolYun</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-07-19</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Android/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Android</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <p>先看一下用法</p>
+<pre><code>AsyncTask&lt;Void, Void, Void&gt; asyncTask = new AsyncTask&lt;Void, Void, Void&gt;() {
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+        return null;
+    }
+};
+asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己去实现,才能使用</p>
+      
+        <div class="readmore">
+          <a href="/2019/07/19/AsyncTask/" class="flat-box">
+            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+    
+      <div class="full-width auto-padding tags">
+        
+          <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
+        
+          <a href="/tags/源码/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>源码</a>
         
       </div>
     
@@ -663,7 +767,7 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
     <div class='content pure'>
       <ul class="entry">
         
-          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(3)</div></a></li>
+          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(4)</div></a></li>
         
       </ul>
     </div>
@@ -694,7 +798,7 @@ asyncTask.execute();</code></pre><p>源码中这是一个抽象类,必须自己�
 </header>
 
     <div class='content pure'>
-      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/源码/" style="font-size: 14px; color: #999">源码</a> <a href="/tags/面试/" style="font-size: 19px; color: #777">面试</a>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/源码/" style="font-size: 14px; color: #999">源码</a> <a href="/tags/问题解决/" style="font-size: 14px; color: #999">问题解决</a> <a href="/tags/面试/" style="font-size: 19px; color: #777">面试</a>
     </div>
   </section>
 
