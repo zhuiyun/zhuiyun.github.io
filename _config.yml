@@ -78,4 +78,7 @@ theme: material-x
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: git@github.com:zhuiyun/zhuiyun.github.io.git #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  branch: master #published
+  message: hello
