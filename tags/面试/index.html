@@ -224,6 +224,119 @@
           
         
           
+            <div class='post-wrapper'>
+              <article class="post reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="/2019/07/19/关于面试(二)/">
+      关于面试(二)
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://yoursite.com" rel="nofollow">
+        
+          <i class="fas fa-user" aria-hidden="true"></i>
+        
+        <p>CoolYun</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-07-19</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Android/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Android</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+
+          
+        
+          
+            
+  <div class="new-meta-item top-post">
+    <a class='notlink'>
+      <i class="fas fa-angle-double-up" aria-hidden="true"></i>
+      <p>Top</p>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <h4 id="view的绘制流程"><a href="#view的绘制流程" class="headerlink" title="view的绘制流程"></a>view的绘制流程</h4><p>Android的UI管理系统层级关系<br><img src="https://coolyun1.oss-cn-shenzhen.aliyuncs.com/20190719141337.png" alt><br>    View的绘制过程是从ViewRoot的performTraversals方法开始的，在其内部依次调用View的performMeasure,performLayout,performDraw三个方法。这三个方法分别完成顶级View的measure,layout,draw过程。其中，performMeasure中会调用measure方法，而在measure方法中又会调用onMeausre()方法，然后在onMeaure方法中会对所有的子元素进行measure过程，这时measure流程就从父容器传递到了子元素中，子元素会继续重复父容器的measure过程，如此反复即完成了整个View树结构的遍历，最终 完成View的测量过程。</p>
+      
+        <div class="readmore">
+          <a href="/2019/07/19/关于面试(二)/" class="flat-box">
+            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+            Read More
+          </a>
+        </div>
+      
+    </div>
+    
+      <div class="full-width auto-padding tags">
+        
+          <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
+        
+          <a href="/tags/面试/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>面试</a>
+        
+      </div>
+    
+  </section>
+</article>
+
+            </div>
+          
         
       
     
@@ -338,112 +451,6 @@
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <article class="post reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/2019/07/19/关于面试(二)/">
-      关于面试(二)
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-  <div class='new-meta-item author'>
-    
-      <a href="http://yoursite.com" rel="nofollow">
-        
-          <i class="fas fa-user" aria-hidden="true"></i>
-        
-        <p>CoolYun</p>
-      </a>
-    
-  </div>
-
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2019-07-19</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-  
-  <div class='new-meta-item category'>
-    <a href='/categories/Android/' rel="nofollow">
-      <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>Android</p>
-    </a>
-  </div>
-
-
-          
-        
-          
-            
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <h4 id="view的绘制流程"><a href="#view的绘制流程" class="headerlink" title="view的绘制流程"></a>view的绘制流程</h4><p>Android的UI管理系统层级关系<br><img src="https://coolyun1.oss-cn-shenzhen.aliyuncs.com/20190719141337.png" alt><br>    View的绘制过程是从ViewRoot的performTraversals方法开始的，在其内部依次调用View的performMeasure,performLayout,performDraw三个方法。这三个方法分别完成顶级View的measure,layout,draw过程。其中，performMeasure中会调用measure方法，而在measure方法中又会调用onMeausre()方法，然后在onMeaure方法中会对所有的子元素进行measure过程，这时measure流程就从父容器传递到了子元素中，子元素会继续重复父容器的measure过程，如此反复即完成了整个View树结构的遍历，最终 完成View的测量过程。</p>
-      
-        <div class="readmore">
-          <a href="/2019/07/19/关于面试(二)/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
-          </a>
-        </div>
-      
-    </div>
-    
-      <div class="full-width auto-padding tags">
-        
-          <a href="/tags/Android/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Android</a>
-        
-          <a href="/tags/面试/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>面试</a>
-        
-      </div>
-    
-  </section>
-</article>
-
-          </div>
         
       
     
