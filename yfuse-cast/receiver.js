@@ -48,7 +48,35 @@
       dolbyVisionSupported: facts.dolbyVision,
       dolbyAtmosSupported: facts.dolbyAtmos,
       requestedMediaSupported: supportsProfile(profile),
+      trackSelectionSupported: true,
+      queueSupported: true,
     });
+  }
+
+  function sessionSnapshot() {
+    const load = currentLoadFacts();
+    if (!load) return null;
+    const audioManager = player.getAudioTracksManager && player.getAudioTracksManager();
+    const textManager = player.getTextTracksManager && player.getTextTracksManager();
+    const audio = audioManager && audioManager.getActiveTrack && audioManager.getActiveTrack();
+    const text = textManager && textManager.getActiveTracks && textManager.getActiveTracks();
+    const queueManager = player.getQueueManager && player.getQueueManager();
+    const queueItems = queueManager && queueManager.getItems && queueManager.getItems();
+    const media = player.getMediaInformation();
+    const customData = media && media.customData;
+    return {
+      type: 'session.state',
+      revision: load.revision,
+      queueIndex: customData && Number(customData.yfuseQueueIndex),
+      queueSize: Array.isArray(queueItems) ? queueItems.length : null,
+      activeAudioTrackId: audio ? audio.trackId : null,
+      activeTextTrackIds: Array.isArray(text) ? text.map((track) => track.trackId) : [],
+    };
+  }
+
+  function sendSessionState(senderId) {
+    const snapshot = sessionSnapshot();
+    if (snapshot) context.sendCustomMessage(namespace, senderId, snapshot);
   }
 
   function currentLoadFacts() {
@@ -114,7 +142,12 @@
         return;
       }
     }
-    if (!payload || payload.type !== 'capabilities.request') return;
+    if (!payload) return;
+    if (payload.type === 'state.request') {
+      sendSessionState(event.senderId);
+      return;
+    }
+    if (payload.type !== 'capabilities.request') return;
     const revision = Number(payload.revision);
     if (!Number.isSafeInteger(revision)) return;
     sendCapabilities(event.senderId, revision, payload.profile);
@@ -132,6 +165,7 @@
         latestMediaStatus &&
         latestMediaStatus.playerState === cast.framework.messages.PlayerState.PLAYING;
       sendOutputReceipt(Boolean(playing), 'Receiver MediaStatus 实际 HDR/音轨回执');
+      sendSessionState(undefined);
     },
   );
   player.addEventListener(
